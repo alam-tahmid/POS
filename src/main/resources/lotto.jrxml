@@ -50,7 +50,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="135" splitType="Stretch">
+		<band height="170" splitType="Stretch">
 			<textField pattern="MMMMM dd, yyyy">
 				<reportElement x="152" y="55" width="72" height="20" uuid="e9aa6b99-bff7-4ab2-89ae-b575528a0feb">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
@@ -68,14 +68,14 @@
 				<text><![CDATA[Date:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="30" y="55" width="100" height="20" uuid="5bd5521d-0b7a-40c6-a1b6-83a3d383333f"/>
+				<reportElement x="35" y="55" width="90" height="20" uuid="5bd5521d-0b7a-40c6-a1b6-83a3d383333f"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{invoiceNo}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="55" width="36" height="20" uuid="20e13586-dd58-43df-848a-f9b13f64b009"/>
+				<reportElement x="5" y="55" width="36" height="20" uuid="20e13586-dd58-43df-848a-f9b13f64b009"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>

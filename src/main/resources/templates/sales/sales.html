@@ -11,8 +11,9 @@
 	<!-- <link rel="stylesheet" type="text/css" th:href="@{/css/navbar.css}" /> -->
 
 	<!-- Custom styles for this template -->
-	<link th:href="@{css/signin.css}" rel="stylesheet">
+
 	<link th:href="@{css/sales.css}" rel="stylesheet">
+	<link th:href="@{css/signin.css}" rel="stylesheet">
 	<script type="text/javascript" th:src="@{/js/Constant.js}"></script>
 
 	<style>
@@ -103,29 +104,52 @@
 			<button class="btn btn-defualt" onclick="addNewField()">Add new item</button>
 		</div>
 
-		<div class="container" style="margin-left: 53px">
-			<button class="btn btn-defualt" onclick="makeList()">Total</button>
+		<div class="container wrapper" style="margin-left: 53px;">
+			<button class="btn btn-defualt" style="color: white; font-size: 50px; background-color:red	"
+			onclick="makeList()">Total</button>
 		</div>
 
-		<div class="container" style="margin-left: 53px">
+		<div class="container" style="margin-left:53px">
 
 			<h1 id="netAmount">Total Amount</h1>
 			<div class="form-row sales-total">
 				<div class="form-group col-md-3 sales-total">
 					<label>Paid</label>
-					<input type="number" class="form-control sales-total" id="paid" onKeyUp="calculateReturn()">
+					<input type="number" class="form-control" style="height: 55px; font-size: 40px;" id="paid" onKeyUp="calculateReturn()">
 				</div>
 
 				<div class="form-group col-md-3 sales-total">
 					<label for="rate">Return</label>
-					<input type="number" class="form-control sales-total" id="returnAmount" readonly>
+					<input type="number" class="form-control" style="height: 55px; font-size: 40px;" id="returnAmount" readonly>
 				</div>
 			</div>
 		</div>
 
-		<div class="container print-invoice-button">
-			<button class="btn btn-defualt" onclick="printInvoice()">Print Invoice</button>
+		<div class="container print-invoice-button" style="float:right;">
+			<button class="btn btn-default" style=" background-color: green; font-size: 40px; color: red" onclick="printInvoice()">Print Invoice</button>
 		</div>
+
+
+			 <!-- Modal Success-->
+			 <div class="modal fade" id="modal" role="dialog">
+				<div class="modal-dialog">
+				
+				  <!-- Modal content-->
+				  <div class="modal-content">
+					<div class="modal-header">
+					  <button type="button" class="close" data-dismiss="modal">&times;</button>
+					  <h4 class="modal-title">Message</h4>
+					</div>
+					<div class="modal-body">
+					  <p id="modalParagraph"></p>
+					</div>
+					<div class="modal-footer">
+					  <button type="button" class="btn btn-default" data-dismiss="modal" onclick="loadSalesPage()">Close</button>
+					</div>
+				  </div>
+				  
+				</div>
+			  </div>
 
 		<!-- Bootstrap core JavaScript
     ================================================== -->

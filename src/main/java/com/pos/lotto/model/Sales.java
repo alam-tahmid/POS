@@ -25,18 +25,9 @@ public class Sales {
 
 	@Column(name = "barcode")
 	private String barcode;
-	
+
 	@Column(name = "description")
 	private String description;
-
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
 
 	@Column(name = "quantity")
 	private int quantity;
@@ -46,17 +37,9 @@ public class Sales {
 
 	@Column(name = "total")
 	private double total;
-	
+
 	@Column(name = "discount")
 	private double discount;
-
-	public double getDiscount() {
-		return discount;
-	}
-
-	public void setDiscount(double discount) {
-		this.discount = discount;
-	}
 
 	@Column(name = "sold_by_id")
 	private int soldById;
@@ -149,6 +132,22 @@ public class Sales {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public double getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(double discount) {
+		this.discount = discount;
 	}
 
 }

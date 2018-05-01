@@ -32,6 +32,9 @@ public class InvoiceNumber {
 
 	@Column(name = "generated_by")
 	private String generateBy;
+	
+	@Column(name="total_bill")
+	private Double totalBill;
 
 	public int getId() {
 		return id;
@@ -71,6 +74,14 @@ public class InvoiceNumber {
 
 	public void setGenerateBy(String generateBy) {
 		this.generateBy = generateBy;
+	}
+
+	public Double getTotalBill() {
+		return totalBill;
+	}
+
+	public void setTotalBill(Double totalBill) {
+		this.totalBill = totalBill;
 	}
 
 }

@@ -14,7 +14,7 @@ function addNewField() {
     var div1 = document.createElement('div');
     div1.id = ct;
     div1.classList.add("form-group");
-    div1.classList.add("col-md-2");
+    div1.classList.add("col-md-1");
     document.getElementById(rowDiv.id).appendChild(div1);
 
     // Creating a input box for article no
@@ -42,14 +42,29 @@ function addNewField() {
     barcode.onkeyup = function () {
         getDetails(rowDiv.id)
     };
-    document.getElementById((ct + "-2").toString())
-        .appendChild(barcode);
+    document.getElementById((ct + "-2").toString()).appendChild(barcode);
+
+
+    //Creating a div
+    var div1 = document.createElement('div');
+    div1.id = ct + "-3";
+    div1.classList.add("form-group");
+    div1.classList.add("col-md-2");
+    document.getElementById(rowDiv.id).appendChild(div1);
+    //description
+    var description = document.createElement('input');
+    description.setAttribute("type", "text");
+    description.classList.add("form-control");
+    description.classList.add("sales-form-control");
+    description.placeholder = "Desc";
+    description.id = "description" + ct;
+    document.getElementById((ct + "-3").toString()).appendChild(description);
 
     //Creating a div
     var div1 = document.createElement('div');
     div1.id = ct + "-6";
     div1.classList.add("form-group");
-    div1.classList.add("col-md-2");
+    div1.classList.add("col-md-1");
     document.getElementById(rowDiv.id).appendChild(div1);
     //unit price
     var unitPrice = document.createElement('input');
@@ -175,46 +190,13 @@ function makeList() {
                     .getElementById("discountPercentage" + i).value),
                 netPrice: Number(document
                     .getElementById("total" + i).value)
-            };homeNav
+            }; homeNav
             totalPrice = totalPrice + Number(document.getElementById("total" + i).value);
             list[count] = model;
             count++;
         }
     }
     document.getElementById("netAmount").innerHTML = totalPrice;
-    document.getElementById("totalForCalc").value = totalPrice;
-
-    // var data = JSON.stringify(list);dicsountPercentage
-    // var searchResult = $.ajax({
-    // 	type : 'POST',
-    // 	url : "http://localhost:4200/POS/product",
-    // 	data : data,
-    // 	contentType : "application/json",
-    // 	success : function(resultData, textStatus, xhr) {
-    // 		console.log("Successfully Sent");
-    // 		//  window.location = xhr.getResponseHeader("Location");
-    // 		if (xhr.status === 201) {
-    // 			$("#orderSaveSuccessModal").modal();
-    // 			//var link = xhr.getResponseHeader("Location");
-    // 			//var win = window.open(link, '_blank');
-
-    // 			$("#orderSaveUnsuccessModal").modal();
-
-    // 			win.focus();
-    // 		}
-    // 	},
-    // 	error : function(resultData, textStatus, xhr) {
-
-    // 		if (textStatus === "error" || resultData === 400) {
-    // 			$("#orderSaveUnsuccessModal").modal();
-    // 		}
-    // 	},
-
-    // 	failure : function(resultData) {
-    // 		console.log("Error Occured");
-    // 	}
-    // });
-    // console.log(list);
 }
 
 function calculatePrice(id) {
@@ -257,35 +239,37 @@ function getDetails(id) {
     let barcode = document.getElementById("barcode" + num).value;
     let articleNo = barcode.substring(0, 7);
 
+    if (barcode.length === 7) {
 
+        var data = JSON.stringify(articleNo);
+        var searchResult = $.ajax({
+            type: 'POST',
+            url: "http://localhost:4200/POS/getProductDetails",
+            data: data,
+            contentType: "application/json",
+            success: function (resultData, textStatus, xhr) {
+                console.log("Successfully Sent");
+                //  window.location = xhr.getResponseHeader("Location");
+                if (xhr.status === 200) {
 
-    var data = JSON.stringify(articleNo);
-    var searchResult = $.ajax({
-        type: 'POST',
-        url: "http://localhost:4200/POS/getProductDetails",
-        data: data,
-        contentType: "application/json",
-        success: function (resultData, textStatus, xhr) {
-            console.log("Successfully Sent");
-            //  window.location = xhr.getResponseHeader("Location");
-            if (xhr.status === 200) {
+                    document.getElementById('article' + num).value = resultData.articleNo;
+                    document.getElementById('description' + num).value = resultData.description;
+                    document.getElementById('unitPrice' + num).value = resultData.unitPrice;
+                    document.getElementById('discountPercentage' + num).value = resultData.discountPercentage;
+                }
+            },
+            error: function (resultData, textStatus, xhr) {
 
-                document.getElementById('article' + num).value = resultData.articleNo;
-                document.getElementById('unitPrice' + num).value = resultData.unitPrice;
-                document.getElementById('discountPercentage' + num).value = resultData.discountPercentage;
+                if (textStatus === "error" || resultData === 400) {
+                    $("#orderSaveUnsuccessModal").modal();
+                }
+            },
+
+            failure: function (resultData) {
+                console.log("Error Occured");
             }
-        },
-        error: function (resultData, textStatus, xhr) {
-
-            if (textStatus === "error" || resultData === 400) {
-                $("#orderSaveUnsuccessModal").modal();
-            }
-        },
-
-        failure: function (resultData) {
-            console.log("Error Occured");
-        }
-    });
+        });
+    }
 }
 
 function printInvoice() {
@@ -302,13 +286,14 @@ function printInvoice() {
             var model = {
                 articleNo: document.getElementById("article" + i).value,
                 barcode: document.getElementById("barcode" + i).value,
+                description: document.getElementById("description"+i).value,
                 unitPrice: Number(document.getElementById("unitPrice"
                     + i).value),
                 quantity: Number(document.getElementById("quantity"
                     + i).value),
                 totalAmount: Number(document
                     .getElementById("totalPrice" + i).value),
-                discountPercentage: Number(document
+                discount: Number(document
                     .getElementById("discountPercentage" + i).value),
                 total: Number(document
                     .getElementById("total" + i).value)
@@ -330,11 +315,12 @@ function printInvoice() {
             console.log("Successfully Sent");
             //  window.location = xhr.getResponseHeader("Location");
             if (xhr.status === 201) {
-                $("#orderSaveSuccessModal").modal();
-                //var link = xhr.getResponseHeader("Location");
-                //var win = window.open(link, '_blank');
+                $("#modal").modal();
+                var link = xhr.getResponseHeader("Location");
+                var win = window.open(link, '_blank');
 
-                $("#orderSaveUnsuccessModal").modal();
+                // $("#orderSaveUnsuccessModal").modal();
+                document.getElementById("modalParagraph").innerHTML = "Invoice generated";
 
                 win.focus();
             }
@@ -367,4 +353,8 @@ function calculateReturn() {
 window.onload = function () {
 
     document.getElementById("homeNav").classList.add('active');
+}
+
+function loadSalesPage() {
+    location.reload();
 }

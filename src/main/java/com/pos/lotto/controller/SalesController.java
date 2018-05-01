@@ -58,10 +58,9 @@ public class SalesController {
 
 	@Autowired
 	private InvoiceService invoiceService;
-	
+
 	@Autowired
 	private ApplicationContext appContext;
-
 
 	@PostMapping(value = "/sales")
 	public ResponseEntity<Object> sales(@RequestBody String json, HttpServletRequest request,
@@ -75,86 +74,99 @@ public class SalesController {
 
 		Gson gson = new Gson();
 		jsonArray = new JSONArray(json);
-		List<Sales> salesList = new ArrayList<Sales>();
 
-		InvoiceNumber invoiceNumber = invoiceService.findLast();
-		int invoiceNo = invoiceNumber.getInvoice();
-		invoiceNo = invoiceNo + 1;
-		InvoiceNumber newInvoiceNumber = new InvoiceNumber();
-		String newGeneratedInvoice = "INV" + invoiceNo;
+		if (jsonArray.length() > 0) {
 
-		newInvoiceNumber.setGenerateBy(salesMan);
-		newInvoiceNumber.setInvoice(invoiceNo);
-		newInvoiceNumber.setGenerateBy(newGeneratedInvoice);
-		newInvoiceNumber.setGeneratedOn(new Date());
+			List<Sales> salesList = new ArrayList<Sales>();
 
-		invoiceService.saveInvoice(newInvoiceNumber);
+			InvoiceNumber invoiceNumber = invoiceService.findLast();
+			int invoiceNo = invoiceNumber.getInvoice();
+			invoiceNo = invoiceNo + 1;
+			InvoiceNumber newInvoiceNumber = new InvoiceNumber();
+			String newGeneratedInvoice = "INV" + invoiceNo;
 
-		Sales sales = new Sales();
+			newInvoiceNumber.setGenerateBy(salesMan);
+			newInvoiceNumber.setInvoice(invoiceNo);
+			newInvoiceNumber.setGenerateBy(newGeneratedInvoice);
+			newInvoiceNumber.setGeneratedOn(new Date());
 
-		for (int count = 0; count < jsonArray.length(); count++) {
+			Sales sales = new Sales();
 
-			sales = new Sales();
-			sales = gson.fromJson(jsonArray.get(count).toString(), Sales.class);
-			salesList.add(sales);
+			for (int count = 0; count < jsonArray.length(); count++) {
 
-		}
-
-		for (int count = 0; count < salesList.size(); count++) {
-
-			String articleNo = salesList.get(count).getArticleNo();
-			Product oldProd = productService.findById(articleNo);
-			Sales sale = salesList.get(count);
-
-			if (oldProd != null) {
-
-				int oldQuantity = oldProd.getQuantity();
-				int salesQuantity = sale.getQuantity();
-
-				int updatedQuantity = oldQuantity - salesQuantity;
-				double updatedPrice = updatedQuantity + oldProd.getUnitPrice();
-
-				oldProd.setQuantity(updatedQuantity);
-				oldProd.setTotalPrice(updatedPrice);
-
-				productService.updateOrder(oldProd);
+				sales = new Sales();
+				sales = gson.fromJson(jsonArray.get(count).toString(), Sales.class);
+				salesList.add(sales);
 
 			}
 
-			sale.setInvoiceNo(newGeneratedInvoice);
-			sale.setDate(new Date());
-			sale.setSoldById(user.getId());
-			sale.setSoldByName(salesMan);
+			Double sum = 0.0;
 
-			salesService.saveSale(sale);
+			for (int count = 0; count < salesList.size(); count++) {
+				sum = sum + salesList.get(count).getTotal();
+			}
+
+			newInvoiceNumber.setTotalBill(sum);
+			invoiceService.saveInvoice(newInvoiceNumber);
+
+			for (int count = 0; count < salesList.size(); count++) {
+
+				String articleNo = salesList.get(count).getArticleNo();
+				Product oldProd = productService.findById(articleNo);
+				Sales sale = salesList.get(count);
+
+				if (oldProd != null) {
+
+					int oldQuantity = oldProd.getQuantity();
+					int salesQuantity = sale.getQuantity();
+
+					int updatedQuantity = oldQuantity - salesQuantity;
+					double updatedPrice = updatedQuantity + oldProd.getUnitPrice();
+
+					oldProd.setQuantity(updatedQuantity);
+					oldProd.setTotalPrice(updatedPrice);
+
+					productService.updateOrder(oldProd);
+
+				}
+
+				sale.setInvoiceNo(newGeneratedInvoice);
+				sale.setDate(new Date());
+				sale.setSoldById(user.getId());
+				sale.setSoldByName(salesMan);
+
+				salesService.saveSale(sale);
+
+			}
+
+			UriComponents uriComponents = uriComponentBuilder.path("/generatePdf/" + newGeneratedInvoice).build();
+
+			headers.setLocation(uriComponents.toUri());
+
+			System.out.println("Stop there");
+			return new ResponseEntity<Object>(headers, HttpStatus.CREATED);
+
+		} else {
+
+			return new ResponseEntity<Object>("No Orders created", HttpStatus.BAD_REQUEST);
 
 		}
 
-		UriComponents uriComponents = uriComponentBuilder.path("/generatePdf/" + newGeneratedInvoice).build();
-
-		headers.setLocation(uriComponents.toUri());
-
-		System.out.println("Stop there");
-		return new ResponseEntity<Object>(headers, HttpStatus.CREATED);
 	}
 
 	//
 	@RequestMapping(value = "/generatePdf/{invoiceNo}", method = RequestMethod.GET)
-	public ModelAndView report(@PathVariable String invoiceNo,HttpServletRequest request) {
-		
+	public ModelAndView report(@PathVariable String invoiceNo, HttpServletRequest request) {
+
 		List<Sales> salesList = new ArrayList<Sales>();
-		salesList.add(0,new Sales());
-		List<Sales> sales = salesService.findByInvoiceNo("INV1001");
+		salesList.add(0, new Sales());
+		List<Sales> sales = salesService.findByInvoiceNo(invoiceNo);
 		List<PdfData> pdfDataList = new ArrayList<PdfData>();
 		PdfData data = new PdfData();
 		data.setInvoiceNo(invoiceNo);
 		pdfDataList.add(data);
-		/*int c = 0;
-		for(int i = 1; i<=sales.size(); i++) {
-			salesList.add(i, sales.get(c));
-			c++;
-		}*/
-		for(int i =0;i<sales.size();i++){
+
+		for (int i = 0; i < sales.size(); i++) {
 			Sales tableData = sales.get(i);
 			data = new PdfData();
 			data.setArticleNo(tableData.getArticleNo());
@@ -164,9 +176,7 @@ public class SalesController {
 			data.setTotal(tableData.getTotal());
 			pdfDataList.add(data);
 		}
-		
 
-		
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
 		JasperReportsPdfView view = new JasperReportsPdfView();
 		view.setUrl("classpath:lotto.jrxml");
@@ -177,12 +187,12 @@ public class SalesController {
 		parameterMap.put("datasource", pdfDataSource);
 		parameterMap.put("IS_IGNORE_PAGINATION", true);
 		ServletContext context = request.getSession().getServletContext();
-	    String path = context.getRealPath("/") + "";
-	    parameterMap.put("Context", path);
+		String path = context.getRealPath("/") + "";
+		parameterMap.put("Context", path);
 		return new ModelAndView(view, parameterMap);
 	}
-	
-	@GetMapping(value="allSales")
+
+	@GetMapping(value = "allSales")
 	public String allSales(Model model, HttpServletRequest request) {
 		HttpSession session = SessionUtil.createSession(request);
 		User user = (User) session.getAttribute("user");

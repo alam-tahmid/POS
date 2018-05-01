@@ -13,6 +13,15 @@
 
 .print-invoice-button{
 
-    margin-top: 35px;
-    margin-left: 50px;
+    margin-top: 63px;
+    margin-left: 66px;
+}
+
+.wrapper {
+    text-align: center;
+}
+
+.button {
+    position: absolute;
+    top: 50%;
 }

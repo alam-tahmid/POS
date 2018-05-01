@@ -48,50 +48,64 @@ public class ProductController {
 	public ResponseEntity<String> product(@RequestBody String json) throws JSONException {
 
 		Gson gson = new Gson();
-		jsonArray = new JSONArray(json);
-		List<Product> productList = new ArrayList<Product>();
+		try {
 
-		Product product = new Product();
+			jsonArray = new JSONArray(json);
+			List<Product> productList = new ArrayList<Product>();
+			
+			
 
-		for (int count = 0; count < jsonArray.length(); count++) {
+			Product product = new Product();
 
-			product = new Product();
-			product = gson.fromJson(jsonArray.get(count).toString(), Product.class);
-			productList.add(product);
+			for (int count = 0; count < jsonArray.length(); count++) {
 
-		}
+				product = new Product();
+				product = gson.fromJson(jsonArray.get(count).toString(), Product.class);
+				productList.add(product);
 
-		for (int count = 0; count < productList.size(); count++) {
-
-			String articleNo = productList.get(count).getArticleNo();
-			Product oldProd = productService.findById(articleNo);
-			Product newProd = productList.get(count);
-
-			if (oldProd != null) {
-
-				// update the quantity;
-
-				int oldQuantity = oldProd.getQuantity();
-				int newQuantity = newProd.getQuantity();
-				double oldTotalPrice = oldProd.getTotalPrice();
-				double newTotalPrice = newProd.getTotalPrice();
-				int updatedQuantity = oldQuantity + newQuantity;
-				double updatedPrice = oldTotalPrice + newTotalPrice;
-				oldProd.setQuantity(updatedQuantity);
-				oldProd.setTotalPrice(updatedPrice);
-
-				productService.updateOrder(oldProd);
-
-			} else {
-				// enter new entity
-
-				productService.addOrder(newProd);
 			}
+			if(productList.size() ==0 ) {
+				return new ResponseEntity("There is no product to add. Please add product", HttpStatus.BAD_REQUEST);
+			}else {
+			for (int count = 0; count < productList.size(); count++) {
+
+				String articleNo = productList.get(count).getArticleNo();
+				Product oldProd = productService.findById(articleNo);
+				Product newProd = productList.get(count);
+
+				if (oldProd != null) {
+
+					// update the quantity;
+
+					int oldQuantity = oldProd.getQuantity();
+					int newQuantity = newProd.getQuantity();
+					double oldTotalPrice = oldProd.getTotalPrice();
+					double newTotalPrice = newProd.getTotalPrice();
+					int updatedQuantity = oldQuantity + newQuantity;
+					double updatedPrice = oldTotalPrice + newTotalPrice;
+					oldProd.setQuantity(updatedQuantity);
+					oldProd.setTotalPrice(updatedPrice);
+
+					productService.updateOrder(oldProd);
+
+				} else {
+					// enter new entity
+
+					productService.addOrder(newProd);
+				}
+			}
+
+			System.out.println("Stop there");
+
+			return new ResponseEntity("Order saved sccussfully", HttpStatus.CREATED);
+			}
+			
+		} catch (Exception e) {
+
+			return new ResponseEntity("Error occurred cannot save product", HttpStatus.BAD_REQUEST);
 		}
+		
 
-		System.out.println("Stop there");
-
-		return new ResponseEntity("success", HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "getInventory", method = RequestMethod.GET)
@@ -105,7 +119,6 @@ public class ProductController {
 
 		return "admin/products";
 	}
-	
 
 	@PostMapping(value = "/getProductDetails")
 	public ResponseEntity<String> getProduct(@RequestBody String articleNo) {

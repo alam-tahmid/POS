@@ -45,6 +45,9 @@ public class User {
 	@Column(name = "last_name")
 	@NotEmpty(message = "*Please provide your last name")
 	private String lastName;
+	
+	@Column(name="emp_id")
+	private String empId;
 
 	@Column(name = "active")
 	private int active;
@@ -102,6 +105,14 @@ public class User {
 
 	public void setActive(int active) {
 		this.active = active;
+	}
+
+	public String getEmpId() {
+		return empId;
+	}
+
+	public void setEmpId(String empId) {
+		this.empId = empId;
 	}
 
 	public int getFirstLogin() {

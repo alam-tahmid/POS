@@ -222,19 +222,16 @@ var ct = 0;
 					console.log("Successfully Sent");
 					//  window.location = xhr.getResponseHeader("Location");
 					if (xhr.status === 201) {
-						$("#orderSaveSuccessModal").modal();
-						//var link = xhr.getResponseHeader("Location");
-						//var win = window.open(link, '_blank');
 
-						$("#orderSaveUnsuccessModal").modal();
-
-						win.focus();
+						$("#modal").modal();
+						document.getElementById("modalParagraph").innerHTML = resultData;
 					}
 				},
 				error : function(resultData, textStatus, xhr) {
 
-					if (textStatus === "error" || resultData === 400) {
-						$("#orderSaveUnsuccessModal").modal();
+					if ( resultData.status === 400) {
+						$("#modal").modal();
+						document.getElementById("modalParagraph").innerHTML = resultData.responseText;
 					}
 				},
 
@@ -243,11 +240,6 @@ var ct = 0;
 				}
 			});
 			console.log(list);
-			// var sum = 0;
-			// for (var d = 1; d < list.length; d++) {
-			//     sum = sum + Number(list[d]);
-			// }
-			// document.getElementById("total").innerHTML = sum;
 		}
 		
 		function calculatePrice(id){
@@ -279,4 +271,8 @@ var ct = 0;
 		function onDelete(ct) {
 			var elem = document.getElementById(ct);
 			elem.parentNode.removeChild(elem);
+		}
+
+		function loadAddProductPage(){
+			location.reload();
 		}
