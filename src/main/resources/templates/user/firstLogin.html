@@ -1,0 +1,125 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+
+<title>BanExEx</title>
+
+<!-- Bootstrap core CSS -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/navbar.css}" />
+
+<!-- Custom styles for this template -->
+<link th:href="@{css/signin}" rel="stylesheet">
+
+</head>
+
+<body>
+	<div class="container-fluid" id="menubar">
+		<!-- Static navbar -->
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed"
+						data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+						aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span> <span
+							class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" th:href="@{/home}">BanEx</a>
+				</div>
+
+				<div id="navbar" class="navbar-collapse collapse">
+					<div class="row row-margin-unset-all">
+						<div class="col-md-6">
+
+						</div>
+						<div class="col-md-5">
+
+							<ul class="nav navbar-nav navbar-right">
+								<li><label th:utext="${userinfo}" style="padding-top: 15px"></label></li>
+								<li><a th:href="@{/logout}">Logout</a></li>
+							</ul>
+						</div>
+					</div>
+					<!--/.nav-collapse -->
+				</div>
+				<!--/.container-fluid -->
+		</nav>
+	</div>
+	<!-- End navbar div -->
+	<!-- /container -->
+
+	<div class="container-fluid">
+		<div class="container-fluid">
+		<div class="form-group">
+			<form action="#" th:action="@{/updatePassword}" method="POST" ">
+				<div class="form-group row">
+					<label for="date" class="col-sm-2 col-form-label" >Date</label>
+					<div class="col-md-4">
+						<input type="password"
+							class="form-control" id="oldPassword" placeholder="Old Password">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="value">value</label>
+					<div class="col-md-4"> 
+						<input type="password" class="form-control"  id="newPassword">
+					</div>
+				</div>
+			</form>
+			<button type="submit" class="btn btn-primary mb-2" id="firstTimeLoginBtn">Confirm Rate</button>
+		</div>
+	</div>
+	</div>
+
+
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<script type="text/javascript"
+		th:src="@{/webjars/jquery/3.3.1/jquery.min.js/}"></script>
+	<script type="text/javascript"
+		th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/utility.js}"></script>
+	<script type="text/javascript">
+	$("#firstTimeLoginBtn").click(function (){
+
+
+	    var oldPassword = document.getElementById("oldPassword").value;
+	    var newPassword = document.getElementById("newPassword").value;
+
+	    
+	    var password = {
+	       oldPassword: oldPassword,
+	        newPassword: newPassword
+	    };
+	    console.log(password);
+
+	    var data = JSON.stringify(password);
+
+	    var searchResult = $.ajax({
+	        type: 'POST',
+	        url: "http://localhost:8080/demo/updatePassword",
+	        data: data,
+	        contentType: "application/json",
+	        success: function (resultData) {
+	            console.log("Successfully Sent");
+	          //  window.location = xhr.getResponseHeader("Location");\
+	          window.location.replace("http://localhost:8080/demo/home");
+
+	        },
+	        failure: function(resultData){
+	            console.log("Error Occured");
+	        }
+	    });
+	});
+	
+	</script>
+
+
+</body>
+</html>

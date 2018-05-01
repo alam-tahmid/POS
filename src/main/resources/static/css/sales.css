@@ -1,0 +1,18 @@
+.sales-form-group{
+    margin-left: -100px;
+}
+
+.sales-form-control{
+    height: 43px;
+}
+
+.sales-total{
+    height: 55px;
+    font-size: 40px;
+}
+
+.print-invoice-button{
+
+    margin-top: 35px;
+    margin-left: 50px;
+}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>BanExEx</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+    <!-- <link rel="stylesheet" type="text/css" th:href="@{/css/navbar.css}" /> -->
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{css/signin}" rel="stylesheet">
+    <script type="text/javascript" th:src="@{/js/Constant.js}"></script>
+
+</head>
+
+<body>
+    <!-- End navbar div -->
+    <div th:replace="sales/sales :: #menubar"></div>
+    
+    <div class="container">
+    <form>
+
+        <div class="row">
+
+            <div class="form-group col-md-4">
+                <label for="firstName">First Name</label>
+                <input type="text" class="form-control" id="firstName" th:value="${userFistName}">
+            </div>
+
+            <div class="form-group col-md-4">
+                <label for="lastName">Last Name</label>
+                <input type="text" class="form-control" id="lastName" th:value="${userLastName}">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="lastName">Employee Id</label>
+                <input type="text" class="form-control" id="employeeId" readonly>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="email">Email address:</label>
+                <input type="email" class="form-control" id="email" th:value="${userEmailId}">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-default" onclick="updateInfo()">Submit</button>
+    </form>
+
+</div>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <script type="text/javascript" th:src="@{/webjars/jquery/3.3.1/jquery.min.js/}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/Constant.js}"></script>
+    <script type="text/javascript" th:src="@{/js/utility.js}"></script>
+    <script type="text/javascript" th:src="@{/js/order/inputFieldValidation.js}"></script>
+    <script type="text/javascript" th:src="@{/js/order/rateGenerator.js}"></script>
+    <script type="text/javascript" th:src="@{/js/order/calculation.js}"></script>
+    <script type="text/javascript" th:src="@{/js/order/saveOrder.js}"></script>
+
+</body>
+
+</html>

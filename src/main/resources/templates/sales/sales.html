@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+
+	<title>POS</title>
+
+	<!-- Bootstrap core CSS -->
+	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+	<!-- <link rel="stylesheet" type="text/css" th:href="@{/css/navbar.css}" /> -->
+
+	<!-- Custom styles for this template -->
+	<link th:href="@{css/signin.css}" rel="stylesheet">
+	<link th:href="@{css/sales.css}" rel="stylesheet">
+	<script type="text/javascript" th:src="@{/js/Constant.js}"></script>
+
+	<style>
+		.form-control {
+			height: 33px;
+			font-size: 10px;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container-fluid" id="menubar">
+		<!-- Static navbar -->
+		<nav class="navbar navbar-inverse">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+					 aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" th:href="@{/home}">POS</a>
+				</div>
+
+				<div id="navbar" class="navbar-collapse collapse">
+					<div class="row row-margin-unset-all">
+						<div class="col-md-6">
+							<ul class="nav navbar-nav">
+								<li id="homeNav">
+									<a th:href="@{/home}">Home</a>
+								</li>
+								<li id="salesNav">
+									<a th:href="@{/allSales}">Sales</a>
+								</li>
+								<li class="dropdown">
+									<a class="dropdown-toggle" data-toggle="dropdown" href="#">Inventory
+										<span class="caret"></span>
+									</a>
+									<ul class="dropdown-menu">
+										<li>
+											<a th:href="@{/getInventory}">Product Inventory</a>
+										</li>
+										<li>
+											<a th:href="@{/addProduct}">Add Inventory</a>
+										</li>
+										<li>
+											<a th:href="@{/uploadFile}">File Upload</a>
+										</li>
+										<li>
+											<a th:href="@{/download.xls}">Download Inventory List</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+						<div class="col-md-5">
+
+							<ul class="nav navbar-nav navbar-right">
+								<li>
+									<a th:utext="${userinfo}" style="padding-top: 15px" th:href="@{/profile}"> </a>
+								</li>
+								<li>
+									<a th:href="@{/logout}">Logout</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<!--/.nav-collapse -->
+				</div>
+				<!--/.container-fluid -->
+		</nav>
+		</div>
+		<!-- End navbar div -->
+		<!-- /container -->
+
+		<div class="container">
+
+			<div class="form-group sales-form-group">
+
+				<div class="container" id="newlink"></div>
+			</div>
+
+		</div>
+
+		<div class="container" style="margin-left: 53px; margin-bottom: 10px">
+			<button class="btn btn-defualt" onclick="addNewField()">Add new item</button>
+		</div>
+
+		<div class="container" style="margin-left: 53px">
+			<button class="btn btn-defualt" onclick="makeList()">Total</button>
+		</div>
+
+		<div class="container" style="margin-left: 53px">
+
+			<h1 id="netAmount">Total Amount</h1>
+			<div class="form-row sales-total">
+				<div class="form-group col-md-3 sales-total">
+					<label>Paid</label>
+					<input type="number" class="form-control sales-total" id="paid" onKeyUp="calculateReturn()">
+				</div>
+
+				<div class="form-group col-md-3 sales-total">
+					<label for="rate">Return</label>
+					<input type="number" class="form-control sales-total" id="returnAmount" readonly>
+				</div>
+			</div>
+		</div>
+
+		<div class="container print-invoice-button">
+			<button class="btn btn-defualt" onclick="printInvoice()">Print Invoice</button>
+		</div>
+
+		<!-- Bootstrap core JavaScript
+    ================================================== -->
+		<script type="text/javascript" th:src="@{/webjars/jquery/3.3.1/jquery.min.js/}"></script>
+		<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+		<script type="text/javascript" th:src="@{/js/sales/sales.js}"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8">
+
+<title>POS</title>
+
+<!-- Bootstrap core CSS -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+<!-- <link rel="stylesheet" type="text/css" th:href="@{/css/navbar.css}" /> -->
+
+<!-- Custom styles for this template -->
+<link th:href="@{css/signin.css}" rel="stylesheet">
+<link th:href="@{css/addProduct.css}" rel="stylesheet">
+<script type="text/javascript" th:src="@{/js/Constant.js}"></script>
+</head>
+
+<body>
+	<div th:replace="sales/sales :: #menubar"></div>
+
+	<div class="container">
+
+		<div class="form-group">
+
+			<div class="container" id="newlink"></div>
+		</div>
+
+	</div>
+
+	<div class="container">
+		<button class="btn btn-defualt" onclick="addNewField()">Add
+			new item</button>
+		<button class="btn btn-defualt" onclick="makeList()">Submit</button>
+	</div>
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<script type="text/javascript"
+		th:src="@{/webjars/jquery/3.3.1/jquery.min.js/}"></script>
+	<script type="text/javascript"
+		th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+		<script type="text/javascript" th:src="@{/js/admin/addProduct.js}"></script>
+
+</body>
+
+</html>

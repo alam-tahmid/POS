@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+
+	<title>BanExEx</title>
+
+	<!-- Bootstrap core CSS -->
+	<script type="text/javascript" src="webjars/jquery/3.3.1/jquery.min.js"></script>
+	<script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+
+	<script type="text/javascript" th:src="@{/js/Constant.js}"></script>
+
+	<!-- Custom styles for this template -->
+	<link th:href="@{css/signin.css}" rel="stylesheet">
+
+</head>
+
+<body>
+	<!-- container for table starts -->
+	<div th:replace="sales/sales :: #menubar"></div>
+	<div class="container">
+
+		<!-- card container Starts -->
+		<div class="card">
+
+			<!-- card-block container starts -->
+			<div class="card-block">
+
+				<!-- table class starts -->
+				<table class="tabe table-hover" id="productTable">
+
+					<!-- thead starts -->
+					<thead>
+						<tr>
+							<th>Article No</th>
+							<th>Barcode</th>
+							<th>Description</th>
+							<th>Color</th>
+							<th>Size</th>
+							<th>Quantity</th>
+							<th>Sold Quantity</th>
+							<th>Unit Price</th>
+							<th>Discount Percentage</th>
+							<th> </th>
+						</tr>
+					</thead>
+					<!-- thead ends -->
+
+					<!-- tbody starts -->
+					<tbody>
+						<tr th:each="product : ${productList}">						
+							<td th:text="${product.articleNo}"></td>
+							<td th:text="${product.barcode}"></td>
+							<td th:text="${product.description}"></td>
+							<td th:text="${product.color}"></td>
+							<td th:text="${product.size}"></td>
+							<td th:text="${product.quantity}"></td>
+							<td th:text="${product.soldQuantity}"></td>
+							<td th:text="${product.unitPrice}"></td>
+							<td th:text="${product.discountPercentage}"></td>
+							<td onclick="getProductDetails(event)" th:id="${product.articleNo}">
+							<input type="button" class="btn btn-info" value="Get Details">
+							</td>
+					</tbody>
+					<!-- tbody ends -->
+
+
+				</table>
+				<!-- table class ends -->
+
+			</div>
+			<!-- card-block container ends -->
+		</div>
+		<!-- card container Starts -->
+
+	</div>
+
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<script type="text/javascript" th:src="@{/js/admin/products.js}"></script>
+</body>
+
+</html>
