@@ -40,59 +40,62 @@ public class ReadExcelFile {
 		while (rowIterator.hasNext()) {
 
 			Row row = rowIterator.next();
-			product = new Product();
+			if ( row.getRowNum() != 0) {
+				product = new Product();
 
-			Cell articleNoCell = row.getCell(0);
-			String articleNo = dataFormatter.formatCellValue(articleNoCell);
-			product.setArticleNo(articleNo);
+				Cell articleNoCell = row.getCell(0);
+				String articleNo = dataFormatter.formatCellValue(articleNoCell);
+				product.setArticleNo(articleNo);
 
-			Cell barcodeCell = row.getCell(1);
-			String barcode = dataFormatter.formatCellValue(barcodeCell);
-			product.setBarcode(barcode);
+				Cell barcodeCell = row.getCell(1);
+				String barcode = dataFormatter.formatCellValue(barcodeCell);
+				product.setBarcode(barcode);
 
-			Cell descriptionCell = row.getCell(2);
-			String description = dataFormatter.formatCellValue(descriptionCell);
-			product.setDescription(description);
+				Cell descriptionCell = row.getCell(2);
+				String description = dataFormatter.formatCellValue(descriptionCell);
+				product.setDescription(description);
 
-			Cell sizeCell = row.getCell(3);
-			String sizeString = dataFormatter.formatCellValue(sizeCell);
-			Integer size = Integer.valueOf(sizeString);
-			product.setSize(size);
+				Cell sizeCell = row.getCell(3);
+				String sizeString = dataFormatter.formatCellValue(sizeCell);
+				Integer size = Integer.valueOf(sizeString);
+				product.setSize(size);
 
-			Cell colorCell = row.getCell(4);
-			String color = dataFormatter.formatCellValue(colorCell);
-			product.setColor(color);
+				Cell colorCell = row.getCell(4);
+				String color = dataFormatter.formatCellValue(colorCell);
+				product.setColor(color);
 
-			Cell unitPriceCell = row.getCell(5);
-			String unitPriceString = dataFormatter.formatCellValue(unitPriceCell);
-			Double unitPrice = Double.valueOf(unitPriceString);
-			product.setUnitPrice(unitPrice);
+				Cell unitPriceCell = row.getCell(5);
+				String unitPriceString = dataFormatter.formatCellValue(unitPriceCell);
+				Double unitPrice = Double.valueOf(unitPriceString);
+				product.setUnitPrice(unitPrice);
 
-			Cell qtyCell = row.getCell(6);
-			String qtyString = dataFormatter.formatCellValue(qtyCell);
-			Integer qty = Integer.valueOf(qtyString);
-			product.setQuantity(qty);
+				Cell qtyCell = row.getCell(6);
+				String qtyString = dataFormatter.formatCellValue(qtyCell);
+				Integer qty = Integer.valueOf(qtyString);
+				product.setQuantity(qty);
 
-			Cell soldQtyCell = row.getCell(7);
-			String soldQtyString = dataFormatter.formatCellValue(soldQtyCell);
-			Integer soldQty = Integer.valueOf(soldQtyString);
-			product.setSoldQuantity(soldQty);
+				Cell soldQtyCell = row.getCell(7);
+				String soldQtyString = dataFormatter.formatCellValue(soldQtyCell);
+				Integer soldQty = Integer.valueOf(soldQtyString);
+				product.setSoldQuantity(soldQty);
 
-			Cell totalPriceCell = row.getCell(8);
-			String totalPriceString = dataFormatter.formatCellValue(totalPriceCell);
-			Double totalPrice = Double.valueOf(totalPriceString);
-			product.setTotalPrice(totalPrice);
+				Cell totalPriceCell = row.getCell(8);
+				String totalPriceString = dataFormatter.formatCellValue(totalPriceCell);
+				Double totalPrice = Double.valueOf(totalPriceString);
+				product.setTotalPrice(totalPrice);
 
-			Cell discountPercentageCell = row.getCell(9);
-			String discountPercentageString = dataFormatter.formatCellValue(discountPercentageCell);
-			Double discountPercentage = Double.valueOf(discountPercentageString);
-			product.setDiscount(discountPercentage);
+				Cell discountPercentageCell = row.getCell(9);
+				String discountPercentageString = dataFormatter.formatCellValue(discountPercentageCell);
+				Double discountPercentage = Double.valueOf(discountPercentageString);
+				product.setDiscount(discountPercentage);
 
-			Cell offerCell = row.getCell(10);
-			String offer = dataFormatter.formatCellValue(offerCell);
-			product.setOffer(offer);
+				Cell offerCell = row.getCell(10);
+				String offer = dataFormatter.formatCellValue(offerCell);
+				product.setOffer(offer);
 
-			products.add(product);
+				products.add(product);
+			} 
+			
 
 		}
 		return products;

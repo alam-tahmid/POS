@@ -95,16 +95,15 @@ public class FileController {
 				}
 			}
 
-			// Save the file locally
+			/*// Save the file locally
 			BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(filepath)));
 			stream.write(uploadfile.getBytes());
-			stream.close();
+			stream.close();*/
+			return new ResponseEntity("Order saved sccussfully", HttpStatus.CREATED);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-
-		return new ResponseEntity<>(HttpStatus.OK);
 	} // method uploadFile
 
 	@RequestMapping(value = "/download", method = RequestMethod.GET)
