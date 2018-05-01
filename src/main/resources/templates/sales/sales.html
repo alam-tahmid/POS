@@ -51,6 +51,19 @@
 									<a th:href="@{/allSales}">Sales</a>
 								</li>
 								<li class="dropdown">
+									<a class="dropdown-toggle" data-toggle="dropdown" href="#">Expense
+										<span class="caret"></span>
+									</a>
+									<ul class="dropdown-menu">
+										<li>
+											<a th:href="@{/expense}">Add Daily Expense</a>
+										</li>
+										<li>
+											<a th:href="@{/expenses}">All Expenses</a>
+										</li>
+									</ul>
+								</li>
+								<li class="dropdown">
 									<a class="dropdown-toggle" data-toggle="dropdown" href="#">Inventory
 										<span class="caret"></span>
 									</a>
@@ -108,8 +121,7 @@
 		</div>
 
 		<div class="container wrapper" style="margin-left: 53px;">
-			<button class="btn btn-defualt" style="color: white; font-size: 50px; background-color:red	"
-			onclick="makeList()">Total</button>
+			<button class="btn btn-defualt" style="color: white; font-size: 50px; background-color:red	" onclick="makeList()">Total</button>
 		</div>
 
 		<div class="container" style="margin-left:53px">
@@ -133,26 +145,26 @@
 		</div>
 
 
-			 <!-- Modal Success-->
-			 <div class="modal fade" id="modal" role="dialog">
-				<div class="modal-dialog">
-				
-				  <!-- Modal content-->
-				  <div class="modal-content">
+		<!-- Modal Success-->
+		<div class="modal fade" id="modal" role="dialog">
+			<div class="modal-dialog">
+
+				<!-- Modal content-->
+				<div class="modal-content">
 					<div class="modal-header">
-					  <button type="button" class="close" data-dismiss="modal">&times;</button>
-					  <h4 class="modal-title">Message</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Message</h4>
 					</div>
 					<div class="modal-body">
-					  <p id="modalParagraph"></p>
+						<p id="modalParagraph"></p>
 					</div>
 					<div class="modal-footer">
-					  <button type="button" class="btn btn-default" data-dismiss="modal" onclick="loadSalesPage()">Close</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal" onclick="loadSalesPage()">Close</button>
 					</div>
-				  </div>
-				  
 				</div>
-			  </div>
+
+			</div>
+		</div>
 
 		<!-- Bootstrap core JavaScript
     ================================================== -->
