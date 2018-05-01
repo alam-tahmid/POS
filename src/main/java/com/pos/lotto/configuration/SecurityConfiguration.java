@@ -65,6 +65,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.antMatchers("/uploadFile").hasAnyAuthority("ADMIN")
 			.antMatchers("/fileUpload").hasAnyAuthority("ADMIN")
 			.antMatchers("/product").hasAnyAuthority("ADMIN")
+			.antMatchers("/addProduct").hasAnyAuthority("ADMIN")
 			.antMatchers("/getInventory").hasAnyAuthority("ADMIN")
 			.antMatchers("/allSales").hasAnyAuthority("ADMIN")
 			.antMatchers("/download.xls").hasAnyAuthority("ADMIN")
