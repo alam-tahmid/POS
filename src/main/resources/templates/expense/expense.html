@@ -111,15 +111,15 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label>Cash</label>
-                        <input type="text" id="cash" class="form-control">
+                        <input type="text" id="cashInHand" class="form-control">
                     </div>
                     <div class="form-group col-md-4">
                         <label for="destinationCountry">Cash Amount</label>
-                        <input type="number" class="form-control" id="cashAmount">
+                        <input type="number" class="form-control" id="cashInHandAmount">
                     </div>
                 </div>
                 <!-- </fieldset> -->
-                <button type="submit" class="btn btn-primary" id="submitExpense()">Submit Expense</button>
+                <button type="submit" class="btn btn-primary" onclick="submitExpense()">Submit Expense</button>
                 <!-- 	</form> -->
             </div>
 
@@ -162,7 +162,111 @@
             var year = d.getFullYear();
             document.getElementById("headerId").innerHTML = "Expense for: " + date + "-" + month + "-" + year;
         }
+        function submitExpense() {
+            var list = [];
+            
+            var daySell = {
+                chargeHead : document.getElementById("cash").value,
+                conditionValue : document.getElementById("cashValue").value
+            };
+            list.push(daySell);
 
+            var deposit = {
+                chargeHead: document.getElementById("deposit").value,
+                conditionValue: document.getElementById("depositValue").value
+            }
+            list.push(deposit);
+
+            if(document.getElementById("field1").value !== ""){
+                var field1 = {
+                    chargeHead: document.getElementById("field1").value,
+                    conditionValue: document.getElementById("field1Value").value
+                }
+                list.push(field1);
+            }
+
+            if(document.getElementById("field2").value !== ""){
+                var field2 = {
+                    chargeHead: document.getElementById("field2").value,
+                    conditionValue: document.getElementById("field2Value").value
+                }
+                list.push(field2);
+            }
+
+            if(document.getElementById("field3").value !== ""){
+                var field3 = {
+                    chargeHead: document.getElementById("field3").value,
+                    conditionValue: document.getElementById("field3Value").value
+                }
+                list.push(field3);
+            }
+
+            if(document.getElementById("field4").value !== ""){
+                var field4 = {
+                    chargeHead: document.getElementById("field4").value,
+                    conditionValue: document.getElementById("field4Value").value
+                }
+                list.push(field4);
+            }
+
+            if(document.getElementById("field5").value !== ""){
+                var field5 = {
+                    chargeHead: document.getElementById("field5").value,
+                    conditionValue: document.getElementById("field5Value").value
+                }
+                list.push(field5);
+            }
+
+            if(document.getElementById("field6").value !== ""){
+                var field6 = {
+                    chargeHead: document.getElementById("field6").value,
+                    conditionValue: document.getElementById("field6Value").value
+                }
+                list.push(field6);
+            }
+
+            if(document.getElementById("field7").value !== ""){
+                var field7 = {
+                    chargeHead: document.getElementById("field7").value,
+                    conditionValue: document.getElementById("field7Value").value
+                }
+                list.push(field7);
+            }
+
+
+            var cashInHand = {
+                chargeHead: document.getElementById("cashInHand").value,
+                conditionValue: document.getElementById("cashInHandAmount").value
+            }
+            list.push(cashInHand);
+
+            var data = JSON.stringify(list);
+
+            var searchResult = $.ajax({
+            type: 'POST',
+            url: "http://localhost:4200/POS/expense",
+            data: data,
+            contentType: "application/json",
+            success: function (resultData, textStatus, xhr) {
+                console.log("Successfully Sent");
+                //  window.location = xhr.getResponseHeader("Location");
+                if (xhr.status === 200) {
+
+                }
+            },
+            error: function (resultData, textStatus, xhr) {
+
+                if (textStatus === "error" || resultData === 400) {
+                    $("#orderSaveUnsuccessModal").modal();
+                }
+            },
+
+            failure: function (resultData) {
+                console.log("Error Occured");
+            }
+        });
+
+        }
     </script>
 </body>
 

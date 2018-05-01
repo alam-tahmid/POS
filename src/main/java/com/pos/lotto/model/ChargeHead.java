@@ -19,9 +19,6 @@ public class ChargeHead {
 	@Column(name = "charge_head_id")
 	private Long chargeHeadId;
 
-	@Column(name = "condition_type_code")
-	private String condTypeCode; // SAP equivalent code;
-
 	@Column(name = "charge_head")
 	private String chargeHead;
 
@@ -34,18 +31,6 @@ public class ChargeHead {
 
 	public Long getChargeHeadId() {
 		return chargeHeadId;
-	}
-
-	public void setChargeHeadId(Long chargeHeadId) {
-		this.chargeHeadId = chargeHeadId;
-	}
-
-	public String getCondTypeCode() {
-		return condTypeCode;
-	}
-
-	public void setCondTypeCode(String condTypeCode) {
-		this.condTypeCode = condTypeCode;
 	}
 
 	public String getChargeHead() {

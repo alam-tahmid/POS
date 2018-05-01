@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>POS</title>
+
+    <!-- Bootstrap core CSS -->
+    <script type="text/javascript" src="webjars/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+
+    <script type="text/javascript" th:src="@{/js/Constant.js}"></script>
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{css/signin.css}" rel="stylesheet">
+
+</head>
+
+<body>
+    <!-- container for table starts -->
+    <div th:replace="sales/sales :: #menubar"></div>
+    <div class="container">
+
+        <!-- card container Starts -->
+        <div class="card">
+
+            <!-- card-block container starts -->
+            <div class="card-block">
+
+                <!-- table class starts -->
+                <table class="tabe table-hover" id="salesTable">
+
+                    <!-- thead starts -->
+                    <thead>
+                        <tr>
+                            <th>Sl No</th>
+                            <th>Date</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <!-- thead ends -->
+
+                    <!-- tbody starts -->
+                    <tbody>
+                        <tr th:each="expense : ${expenseList}">
+                            <td th:text="${expense.id}"></td>
+                            <td th:text="${expense.date}"></td>
+                            <td onclick="viewDetails(event)" th:id="${expense.id}">
+                                <input type="button" class="btn btn-info" value="View Expense">
+                            </td>
+                    </tbody>
+                    <!-- tbody ends -->
+
+
+                </table>
+                <!-- table class ends -->
+
+            </div>
+            <!-- card-block container ends -->
+        </div>
+        <!-- card container Starts -->
+
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- <script type="text/javascript" th:src="@{/js/admin/products.js}"></script> -->
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#salesTable').DataTable({
+                "order": [[1, "desc"]]
+            });
+        });
+        window.onload = function () {
+
+            document.getElementById("salesNav").classList.add('active');
+        }
+
+        function viewDetails(e) {
+
+            var id;
+            var link;
+            var win;
+            if (!e) {
+                var e = window.event;     // Get the window event
+            }
+
+            e.cancelBubble = true; // IE Stop propagation
+
+            if (e.stopPropagation) {
+                e.stopPropagation();  // Other Broswers
+            }
+            //console.log('td clicked');
+            id = e.currentTarget.id;
+            link = LOCATION_URL + "/expense/" + id;
+            //win = window.location(link, '_blank');
+            location.replace(link);
+            //win.focus();
+        }; 
+    </script>
+
+</body>
+
+</html>

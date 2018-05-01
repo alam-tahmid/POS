@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>POS</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{css/signin.css}" rel="stylesheet">
+
+</head>
+
+<body>
+    <div th:replace="sales/sales :: #menubar"></div>
+    <div class="container-fluid">
+        <div class="form-group" id="recieptDiv" commandName="order">
+            <div class="container">
+
+                <div class="form-row">
+                    <h3 id="headerId"></h3>
+                    <div class="form-group col-md-3">
+                        <label>Charge Head 1</label>
+                        <input type="text" class="form-control" th:value="${field0}">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Charge Head 1 Amount</label>
+                        <input type="number" class="form-control" th:value="${field0Value}">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Charge Head 2</label>
+                        <input type="text" class="form-control" th:value="${field2}">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Charge Head 2 Amount</label>
+                        <input type="number" class="form-control" th:value="${field2Value}">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label>Charge Head 3</label>
+                        <input type="text" class="form-control" th:value="${field3}">
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label>Charge Head 3 Amount</label>
+                        <input type="number" class="form-control" th:value="${field3Value}">
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label>Charge Head 4</label>
+                        <input type="text" class="form-control"th:value="${field4}">
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label>Charge Head 4 Amount</label>
+                        <input type="number" class="form-control" th:value="${field4Value}">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label>Charge Head 5</label>
+                        <input type="text" class="form-control" th:value="${field5}">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label>Charge Head 5 Amount</label>
+                        <input type="number" class="form-control"th:value="${field5Value}">
+                    </div>
+
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label>Charge Head 6</label>
+                        <input type="text" class="form-control" th:value="${field6}">
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label>Charge Head 6 Amount</label>
+                        <input type="number" class="form-control" th:value="${field6Value}">
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label>Charge Head 7</label>
+                        <input type="text" class="form-control"th:value="${field7}">
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label>Charge Head 7 Amount</label>
+                        <input type="number" class="form-control" th:value="${field7Value}">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label>Charge Head 8</label>
+                        <input type="text" class="form-control" th:value="${field8}">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label>Charge Head 8 Amount</label>
+                        <input type="number" class="form-control" th:value="${field8Value}">
+                    </div>
+                </div>
+                <hr>
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label for="receiverName">Charge Head 9</label>
+                        <input type="text" class="form-control" th:value="${field9}">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label>Charge Head 9 Amount</label>
+                        <input type="number" class="form-control" th:value="${field9Value}">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Charge Head 10</label>
+                        <input type="text" class="form-control" th:value="${field10}">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="destinationCountry">CCharge Head 10 Amount</label>
+                        <input type="number" class="form-control" th:value="${field10Value}">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <script type="text/javascript" th:src="@{/webjars/jquery/3.3.1/jquery.min.js/}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+</body>
+
+</html>

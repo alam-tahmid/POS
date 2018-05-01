@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -48,12 +47,11 @@ public class ExpenseController {
 	}
 
 	@PostMapping("expense")
-	public ResponseEntity<String> addDailyExpense(@RequestBody String json, Model model, HttpServletRequest request) throws JSONException {
+	public ResponseEntity<String> addDailyExpense(@RequestBody String json, Model model, HttpServletRequest request)
+			throws JSONException {
 
 		HttpSession session = SessionUtil.createSession(request);
 		User user = (User) session.getAttribute("user");
-
-		HttpHeaders headers = new HttpHeaders();
 
 		Gson gson = new Gson();
 		jsonArray = new JSONArray(json);
@@ -76,7 +74,7 @@ public class ExpenseController {
 
 			}
 			expense.setChargeHeads(chargeHeads);
-			
+
 			expenseService.save(expense);
 
 			System.out.println("Stop there");
@@ -106,10 +104,17 @@ public class ExpenseController {
 
 		HttpSession session = SessionUtil.createSession(request);
 		User user = (User) session.getAttribute("user");
-
-		model.addAttribute("expenseList", expenseService.getExpenseDetails(id));
+		Expense list = expenseService.getExpenseDetails(id);
+		
+		for(int count = 0; count< list.getChargeHeads().size(); count++) {
+			
+			model.addAttribute("field"+count, list.getChargeHeads().get(count).getChargeHead());
+			model.addAttribute("field"+count+"Value", list.getChargeHeads().get(count).getConditionValue());
+		}
+		
+		
 		model.addAttribute("userinfo", user.getName() + " " + user.getLastName());
 
-		return "expense/detailExpense.html";
+		return "expense/detailExpense";
 	}
 }
