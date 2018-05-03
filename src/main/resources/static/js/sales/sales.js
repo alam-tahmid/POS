@@ -1,4 +1,5 @@
 var ct = 0;
+var deleteItemId;
 
 function addNewField() {
 
@@ -158,6 +159,7 @@ function addNewField() {
     del.classList.add("btn");
     del.classList.add("btn-default");
     del.type = "button";
+    del.innerHTML = '<i class="fa fa-trash" aria-hidden="true"></i>'
     del.innerText = "Delete";
     del.id = "del" + ct;
     del.onclick = function () {
@@ -224,11 +226,20 @@ function calculatePrice(id) {
         document.getElementById("totalPrice" + num).value = total;
         document.getElementById("total" + num).value = net;
     }
+
+    makeList();
 }
 
 function onDelete(ct) {
-    var elem = document.getElementById(ct);
+
+    $("#deleteModal").modal();
+    deleteItemId = ct;
+}
+
+function onConfirm() {
+    var elem = document.getElementById(deleteItemId);
     elem.parentNode.removeChild(elem);
+    makeList();
 }
 
 
@@ -279,64 +290,71 @@ function printInvoice() {
     let price = [];
     let totalPrice = 0;
 
-    for (var i = 1; i <= c; i++) {
 
-        if (document.getElementById((i).toString()) != null) {
+    if (document.getElementById("netAmount").innerHTML === "Total Amount" || document.getElementById("netAmount").innerHTML === "0") {
 
-            var model = {
-                articleNo: document.getElementById("article" + i).value,
-                barcode: document.getElementById("barcode" + i).value,
-                description: document.getElementById("description"+i).value,
-                unitPrice: Number(document.getElementById("unitPrice"
-                    + i).value),
-                quantity: Number(document.getElementById("quantity"
-                    + i).value),
-                totalAmount: Number(document
-                    .getElementById("totalPrice" + i).value),
-                discount: Number(document
-                    .getElementById("discountPercentage" + i).value),
-                total: Number(document
-                    .getElementById("total" + i).value)
-            };
-            totalPrice = totalPrice + Number(document.getElementById("total" + i).value);
-            list[count] = model;
-            count++;
+        $("#noItemModal").modal();
+        
+    } else {
+        for (var i = 1; i <= c; i++) {
+
+            if (document.getElementById((i).toString()) != null) {
+
+                var model = {
+                    articleNo: document.getElementById("article" + i).value,
+                    barcode: document.getElementById("barcode" + i).value,
+                    description: document.getElementById("description" + i).value,
+                    unitPrice: Number(document.getElementById("unitPrice"
+                        + i).value),
+                    quantity: Number(document.getElementById("quantity"
+                        + i).value),
+                    totalAmount: Number(document
+                        .getElementById("totalPrice" + i).value),
+                    discount: Number(document
+                        .getElementById("discountPercentage" + i).value),
+                    total: Number(document
+                        .getElementById("total" + i).value)
+                };
+                totalPrice = totalPrice + Number(document.getElementById("total" + i).value);
+                list[count] = model;
+                count++;
+            }
         }
+
+
+        var data = JSON.stringify(list);
+        var searchResult = $.ajax({
+            type: 'POST',
+            url: "http://localhost:4200/POS/sales",
+            data: data,
+            contentType: "application/json",
+            success: function (resultData, textStatus, xhr) {
+                console.log("Successfully Sent");
+                //  window.location = xhr.getResponseHeader("Location");
+                if (xhr.status === 201) {
+                    $("#modal").modal();
+                    var link = xhr.getResponseHeader("Location");
+                    var win = window.open(link, '_blank');
+
+                    // $("#orderSaveUnsuccessModal").modal();
+                    document.getElementById("modalParagraph").innerHTML = "Invoice generated";
+
+                    win.focus();
+                }
+            },
+            error: function (resultData, textStatus, xhr) {
+
+                if (textStatus === "error" || resultData === 400) {
+                    $("#orderSaveUnsuccessModal").modal();
+                }
+            },
+
+            failure: function (resultData) {
+                console.log("Error Occured");
+            }
+        });
+        console.log(list);
     }
-
-
-    var data = JSON.stringify(list);
-    var searchResult = $.ajax({
-        type: 'POST',
-        url: "http://localhost:4200/POS/sales",
-        data: data,
-        contentType: "application/json",
-        success: function (resultData, textStatus, xhr) {
-            console.log("Successfully Sent");
-            //  window.location = xhr.getResponseHeader("Location");
-            if (xhr.status === 201) {
-                $("#modal").modal();
-                var link = xhr.getResponseHeader("Location");
-                var win = window.open(link, '_blank');
-
-                // $("#orderSaveUnsuccessModal").modal();
-                document.getElementById("modalParagraph").innerHTML = "Invoice generated";
-
-                win.focus();
-            }
-        },
-        error: function (resultData, textStatus, xhr) {
-
-            if (textStatus === "error" || resultData === 400) {
-                $("#orderSaveUnsuccessModal").modal();
-            }
-        },
-
-        failure: function (resultData) {
-            console.log("Error Occured");
-        }
-    });
-    console.log(list);
 }
 
 

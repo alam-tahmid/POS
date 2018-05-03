@@ -95,6 +95,7 @@
 					</datasetRun>
 					<jr:column width="60" uuid="99d63e91-80a5-4589-bf70-ccabedb8f001">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:tableFooter style="Table_TH" height="10" rowSpan="1"/>
 						<jr:columnHeader style="Table_CH" height="20" rowSpan="1">
 							<staticText>
 								<reportElement x="0" y="0" width="60" height="20" uuid="32e975e8-55aa-4e47-9a78-65f2f9b6935c"/>
@@ -117,6 +118,15 @@
 					</jr:column>
 					<jr:column width="50" uuid="94abc396-9e28-4b97-9c83-e4ef8577503c">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:tableFooter style="Table_TH" height="10" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="50" height="10" uuid="737ce89f-e416-40af-8357-eb831d2b5e3c"/>
+								<textElement textAlignment="Right">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[--Thank ]]></text>
+							</staticText>
+						</jr:tableFooter>
 						<jr:columnHeader style="Table_CH" height="20" rowSpan="1">
 							<staticText>
 								<reportElement x="0" y="0" width="50" height="20" uuid="1fd9d3d7-0265-40b3-8a0f-55b4800ec658"/>
@@ -139,6 +149,15 @@
 					</jr:column>
 					<jr:column width="30" uuid="54ac625e-6b54-4780-a567-d99fe8ee4ca1">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:tableFooter style="Table_TH" height="10" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="30" height="10" uuid="96f2af5f-06b9-45ac-a6c0-90a55725772d"/>
+								<textElement textAlignment="Left">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[ You--]]></text>
+							</staticText>
+						</jr:tableFooter>
 						<jr:columnHeader style="Table_CH" height="20" rowSpan="1">
 							<staticText>
 								<reportElement x="0" y="0" width="30" height="20" uuid="12b379fa-98f9-46f5-8e82-5a7ff7193687"/>
@@ -161,6 +180,7 @@
 					</jr:column>
 					<jr:column width="40" uuid="18edee70-bdb2-4a80-a53a-a3973da071ba">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:tableFooter style="Table_TH" height="10" rowSpan="1"/>
 						<jr:columnHeader style="Table_CH" height="20" rowSpan="1">
 							<staticText>
 								<reportElement x="0" y="0" width="40" height="20" uuid="0ae84297-4911-4b89-b9fe-0d02fd6e7ad0"/>
@@ -189,11 +209,12 @@
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="40" uuid="09bb9d3a-2df8-45c8-8a86-f5f744d9346e">
+					<jr:column width="44" uuid="09bb9d3a-2df8-45c8-8a86-f5f744d9346e">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+						<jr:tableFooter style="Table_TH" height="10" rowSpan="1"/>
 						<jr:columnHeader style="Table_CH" height="20" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="40" height="20" uuid="1b7b213b-0c0e-4df5-85c3-c8c6b9ca5d46"/>
+								<reportElement x="0" y="0" width="44" height="20" uuid="1b7b213b-0c0e-4df5-85c3-c8c6b9ca5d46"/>
 								<textElement textAlignment="Center">
 									<font size="8"/>
 								</textElement>
@@ -202,7 +223,7 @@
 						</jr:columnHeader>
 						<jr:columnFooter style="Table_CH" height="10" rowSpan="1">
 							<textField>
-								<reportElement x="0" y="0" width="40" height="10" uuid="840b045b-d6eb-48b8-a1b2-bad8c6c2382b"/>
+								<reportElement x="0" y="0" width="44" height="10" uuid="840b045b-d6eb-48b8-a1b2-bad8c6c2382b"/>
 								<textElement textAlignment="Center">
 									<font size="8"/>
 								</textElement>
@@ -211,7 +232,7 @@
 						</jr:columnFooter>
 						<jr:detailCell style="Table_TD" height="20">
 							<textField>
-								<reportElement x="0" y="0" width="40" height="20" uuid="d4a39242-2c4d-4d38-a3b4-e69805e142b9"/>
+								<reportElement x="0" y="0" width="44" height="20" uuid="d4a39242-2c4d-4d38-a3b4-e69805e142b9"/>
 								<textElement textAlignment="Center">
 									<font size="8"/>
 								</textElement>
