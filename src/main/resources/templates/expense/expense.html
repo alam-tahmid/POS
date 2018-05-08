@@ -24,11 +24,11 @@
                     <h3 id="headerId"></h3>
                     <div class="form-group col-md-3">
                         <label>Today's Cash</label>
-                        <input type="text" class="form-control" id="cash" value="Day's Sell">
+                        <input type="text" class="form-control" id="cash" value="Day's Sell" readonly>
                     </div>
                     <div class="form-group col-md-3">
                         <label>Amount</label>
-                        <input type="number" class="form-control" id="cashValue">
+                        <input type="number" class="form-control" id="cashValue" th:value="${totalSale}" readonly/>
                     </div>
                     <div class="form-group col-md-3">
                         <label>Bank Deposit</label>

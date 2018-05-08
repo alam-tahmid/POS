@@ -22,8 +22,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.google.gson.Gson;
 import com.pos.lotto.model.ChargeHead;
 import com.pos.lotto.model.Expense;
+import com.pos.lotto.model.Sales;
 import com.pos.lotto.model.User;
 import com.pos.lotto.service.ExpenseService;
+import com.pos.lotto.service.SalesService;
 import com.pos.lotto.util.SessionUtil;
 
 @Controller
@@ -31,19 +33,38 @@ public class ExpenseController {
 
 	@Autowired
 	private ExpenseService expenseService;
+	
+	@Autowired
+	private SalesService salesService;
 
 	@Autowired
 	private JSONArray jsonArray;
+	
 
 	@GetMapping("expense")
 	public String getExpensePage(Model model, HttpServletRequest request) {
 
 		HttpSession session = SessionUtil.createSession(request);
 		User user = (User) session.getAttribute("user");
+		
+		Double totalSale = 0.0;
+		
+		List <Sales> sales = salesService.findDaySale(new Date());
+		if(!sales.isEmpty()) {
+			
+			for(int count = 0; count<sales.size(); count++) {
+				
+				totalSale = totalSale + sales.get(count).getTotal();
+			}
 
-		model.addAttribute("userinfo", user.getName() + " " + user.getLastName());
+			model.addAttribute("totalSale", totalSale);
+			model.addAttribute("userinfo", user.getName() + " " + user.getLastName());
 
-		return "expense/expense";
+			return "expense/expense";
+		}else {
+			return "expense/noSale";
+		}
+	
 	}
 
 	@PostMapping("expense")

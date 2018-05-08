@@ -1,5 +1,6 @@
 package com.pos.lotto.service.Impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,12 @@ public class SalesServiceImpl implements SalesService {
 	public List<Sales> findAll() {
 		
 		return salesRepository.findAll();
+	}
+
+	@Override
+	public List<Sales> findDaySale(Date date) {
+		
+		return salesRepository.findDaysSale(date);
 	}
 
 }
