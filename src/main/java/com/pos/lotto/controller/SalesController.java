@@ -121,7 +121,7 @@ public class SalesController {
 					int salesQuantity = sale.getQuantity();
 
 					int updatedQuantity = oldQuantity - salesQuantity;
-					double updatedPrice = updatedQuantity + oldProd.getUnitPrice();
+					double updatedPrice = updatedQuantity * oldProd.getUnitPrice();
 
 					oldProd.setQuantity(updatedQuantity);
 					oldProd.setTotalPrice(updatedPrice);
