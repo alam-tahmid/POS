@@ -1,5 +1,6 @@
 var ct = 0;
 var deleteItemId;
+var articleNos = [];
 
 function addNewField() {
 
@@ -192,13 +193,16 @@ function makeList() {
                     .getElementById("discountPercentage" + i).value),
                 netPrice: Number(document
                     .getElementById("total" + i).value)
-            }; homeNav
+            }; 
             totalPrice = totalPrice + Number(document.getElementById("total" + i).value);
             list[count] = model;
+            articleNos[count] = document.getElementById("article" + i).value;
             count++;
         }
     }
     document.getElementById("netAmount").innerHTML = totalPrice;
+
+    return list;
 }
 
 function calculatePrice(id) {
@@ -230,6 +234,7 @@ function calculatePrice(id) {
     }
 
     makeList();
+   // addNewField();
 }
 
 function onDelete(ct) {
@@ -269,6 +274,74 @@ function getDetails(id) {
                     document.getElementById('description' + num).value = resultData.description;
                     document.getElementById('unitPrice' + num).value = resultData.unitPrice;
                     document.getElementById('discountPercentage' + num).value = resultData.discount;
+                }
+            },
+            error: function (resultData, textStatus, xhr) {
+
+                if (textStatus === "error" || resultData === 400) {
+                    $("#orderSaveUnsuccessModal").modal();
+                }
+            },
+
+            failure: function (resultData) {
+                console.log("Error Occured");
+            }
+        });
+    }
+}
+
+function getDetailsBar() {
+
+    let barcode = document.getElementById("bar").value;
+    let articleNo = barcode.substring(0, 7);
+    let flag = true;
+
+    let list = makeList();
+
+    //  for(var i=0; i<list.length; i++){
+    //     if(list[i].articleNo === articleNo){
+    //         list[i].quantity = list[i].quantity + 1; 
+    //         flag = false;
+    //     }
+    // }
+
+    if(barcode.length === 11){
+        if(articleNos.includes(articleNo)){
+            for(var count = 1 ; count<=articleNos.length; count++){
+                var article = document.getElementById("article"+count).value;
+                if(article === articleNo){
+                    var num = document.getElementById("quantity"+count).value;
+                    num = Number(num) + 1;
+                    document.getElementById("quantity"+count).value = num;
+                    calculatePrice("row-"+ct);
+                    flag = false;
+                    break;
+                }
+            }
+        }    
+    }
+  
+    
+    if (barcode.length === 11 && flag) {
+
+        var data = JSON.stringify(articleNo);
+        var searchResult = $.ajax({
+            type: 'POST',
+            url: "http://localhost:4200/POS/getProductDetails",
+            data: data,
+            contentType: "application/json",
+            success: function (resultData, textStatus, xhr) {
+                console.log("Successfully Sent");
+                //  window.location = xhr.getResponseHeader("Location");
+                
+                if (xhr.status === 200 && resultData!== "") {
+                    addNewField();
+                    document.getElementById('article' + ct).value = resultData.articleNo;
+                    document.getElementById('description' + ct).value = resultData.description;
+                    document.getElementById('unitPrice' + ct).value = resultData.unitPrice;
+                    document.getElementById('quantity' + ct).value = 1;
+                    document.getElementById('discountPercentage' + ct).value = resultData.discountPercentage;
+                    calculatePrice("row-"+ct);
                 }
             },
             error: function (resultData, textStatus, xhr) {
@@ -337,7 +410,7 @@ function printInvoice() {
                     $("#modal").modal();
                     var link = xhr.getResponseHeader("Location");
                     var win = window.open(link, '_blank');
-
+                    win.print();
                     // $("#orderSaveUnsuccessModal").modal();
                     document.getElementById("modalParagraph").innerHTML = "Invoice generated";
 
@@ -373,6 +446,7 @@ function calculateReturn() {
 window.onload = function () {
 
     document.getElementById("homeNav").classList.add('active');
+  //  addNewField();
 }
 
 function loadSalesPage() {
