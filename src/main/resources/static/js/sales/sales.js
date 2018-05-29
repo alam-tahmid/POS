@@ -222,7 +222,9 @@ function calculatePrice(id) {
 
     if ((unitPrice != null || unitPrice !== 0.00) && (quantity != null || quantity !== 0.00)) {
         let total = unitPrice * quantity
-        let net = total - (total * discount);
+        let discountAmount = total * (discount/100); 
+        let net = total - discountAmount;
+        
         document.getElementById("totalPrice" + num).value = total;
         document.getElementById("total" + num).value = net;
     }
@@ -266,7 +268,7 @@ function getDetails(id) {
                     document.getElementById('article' + num).value = resultData.articleNo;
                     document.getElementById('description' + num).value = resultData.description;
                     document.getElementById('unitPrice' + num).value = resultData.unitPrice;
-                    document.getElementById('discountPercentage' + num).value = resultData.discountPercentage;
+                    document.getElementById('discountPercentage' + num).value = resultData.discount;
                 }
             },
             error: function (resultData, textStatus, xhr) {
